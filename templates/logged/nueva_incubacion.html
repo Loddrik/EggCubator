@@ -6,26 +6,26 @@
 <div id="personalizadas" style="display: none;">
     <form method="POST" action="{{url_for('nueva_incubacion')}}">
         <label for="nombre">Nombre:</label><br>
-        <input type="text" name="nombre"><br>
+        <input type="text" name="nombre" required><br>
 
         <label>Rango de humedad:</label><br>
-        <input type="number" name="humedad_sup" placeholder="Humedad maxima">
-        <input type="number" name="humedad_inf" placeholder="Humedad minima"><br>
+        <input type="number" name="humedad_sup" placeholder="Humedad maxima" required>
+        <input type="number" name="humedad_inf" placeholder="Humedad minima" required><br>
 
         <label >Rangos temperatura:</label><br>
-        <input type="number" name="temperatura_sup" placeholder="Tempreratura maxima">
-        <input type="number" name="temperatura_inf" placeholder="Temperatura minima"><br>
+        <input type="number" name="temperatura_sup" placeholder="Tempreratura maxima" required>
+        <input type="number" name="temperatura_inf" placeholder="Temperatura minima" required><br>
 
         <label for="rotaciones">Rotaciones por dia:</label>
-        <input type="number" name="rotaciones"><br>
+        <input type="number" name="rotaciones" required><br>
 
         <label for="dias">Dias de incubacion:</label>
-        <input type="number" name="dias"><br>
+        <input type="number" name="dias" required><br>
 
         <input type="hidden" value="personalizada" name="n_formulario">
         
 
-        <input type="submit" value="Submit"><br>
+        <input type="submit" onclick="pop_out()" value="Submit"><br>
     </form>
 </div>
 
@@ -40,12 +40,16 @@
             <option value="{{i['nombre']}}">{{i['nombre']}}</option>
             {% endfor %}
         </select>
-        <input type="submit" value="Submit"><br>
+        <input onclick="pop_out()" type="submit" value="Submit"><br>
         <input type="hidden" value="preestablecida" name="n_formulario">
     </form>    
 </div>
 
 <script>
+    function pop_out(){
+        confirm("Estas seguro de querer realizar una nueva incubacion?, tu incubacion actual sera reiniciada.");
+    }
+
     function hide(){
         var x = document.getElementById("personalizadas");
         if(x.style.display == "none"){
@@ -55,6 +59,7 @@
             x.style.display = "none";
         }
     }
+
     function hide1(){
         var x = document.getElementById("preestablecidas");
         if(x.style.display == "none"){

@@ -48,7 +48,7 @@ def register():
                 db.Incubadora.insert({
                     'id_incubadora' : id_incubadora,
                     'incubacion_actual': None,
-                    'incubaciones' : None
+                    'incubaciones' : []
                 })
                 return redirect('/log_user')
 
@@ -132,7 +132,7 @@ def nueva_incubacion():
 
             if db.Incubacion.find_one({
                 "id_incubadora" : session.get('id_incubadora'),
-                "name" : request.form['name']
+                "nombre" : request.form['nombre']
             }):
                 return 'Ya existe una incubacion con ese nombre'
             
@@ -155,7 +155,7 @@ def nueva_incubacion():
                     }
                 })
                 session['incubacion_actual'] = request.form['nombre']
-                return redirect('REDIRECR CONFIGURACINES')
+                return redirect('/')
         else:
             return 'Sky is the limit'
         #tomar datos del fomrulario
