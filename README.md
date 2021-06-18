@@ -1,2 +1,0 @@
-# EggCubator
-EggCubator.

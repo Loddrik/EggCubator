@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<form method="POST" action="{{url_for('register')}}">
+    <label for="username">Username:</label><br>
+    <input type="text" name="username"><br>
+
+    <label for="mail" >Mail:</label><br>
+    <input type="email" name="mail"><br>
+
+    <label for="password" >Password:</label><br>
+    <input type="password" name="password"><br>
+
+    <label for="id_incubadora">Numero de serie de la incubadora:</label><br>
+    <input type="number" name="id_incubadora"><br>
+
+    <input type="submit" value="Submit"><br>
+  </form>
+{% endblock %}
