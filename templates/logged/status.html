@@ -1,0 +1,18 @@
+{% extends 'logged/base_logged.html' %}
+
+{% block body %}
+
+
+<h1>Estado:</h1><br/>
+<div>
+<h3>Configuraciones de {{ incubacion['nombre']}}</h3>
+    <ul>
+        <li>Rangos de humedad: {{ incubacion['adv_config']['humedad'][0]}} , {{ incubacion['adv_config']['humedad'][1]}}</li>
+        <li>Rangos de humedad: {{ incubacion['adv_config']['humedad'][0]}} , {{ incubacion['adv_config']['humedad'][1]}}</li>
+        <li> Rotaciones por dia: {{incubacion['adv_config']['rotaciones']}}</li>
+        <li> Dias de incubacion: {{incubacion['adv_config']['dias']}}</li>
+    </ul>
+</div>
+
+
+{% endblock %}

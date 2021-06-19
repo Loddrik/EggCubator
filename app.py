@@ -3,6 +3,7 @@ from flask import Flask, render_template,request,url_for,redirect,session
 from flask import json
 from flask.json import jsonify
 from flask_pymongo import PyMongo
+from pymongo import message
 
 app = Flask(__name__)
 app.config['MONGO_URI'] = 'mongodb+srv://loddrik:hermosilla@eggcuabtor.juckj.mongodb.net/EggCubator?retryWrites=true&w=majority'
@@ -124,6 +125,8 @@ def logout():
     except:
         return 'Not registered'
 
+
+
 @app.route('/nueva_incubacion',methods = ['GET','POST'])
 def nueva_incubacion():
     if request.method == 'POST':
@@ -147,6 +150,7 @@ def nueva_incubacion():
 
                 db.Incubacion.insert({
                     "nombre": request.form['nombre'],
+                    "id_incubadora" : session.get('id_incubadora'),
                     "adv_config": {
                         "humedad" : [request.form['humedad_inf'],request.form['humedad_sup']],
                         "temperatura" : [request.form['temperatura_inf'],request.form['temperatura_sup']],
@@ -155,7 +159,7 @@ def nueva_incubacion():
                     }
                 })
                 session['incubacion_actual'] = request.form['nombre']
-                return redirect('/')
+                return redirect('/status')
         else:
             return 'Sky is the limit'
         #tomar datos del fomrulario
@@ -166,3 +170,22 @@ def nueva_incubacion():
     else:
         predeterminated = list(db.Configuraciones_predet.find())
         return render_template('logged/nueva_incubacion.html', configurations = predeterminated)
+
+
+@app.route('/status', methods = ['GET'])
+def status():
+    try:
+        incubacion = db.Incubacion.find_one({
+            "nombre" : session.get('incubacion_actual'),
+            "id_incubadora" : session.get('id_incubadora')
+        })
+
+        if not incubacion:
+            return redirect('/nueva_incubacion')
+        else:
+            print(incubacion['adv_config']['humedad'][0])
+            return render_template('/logged/status.html', incubacion = incubacion)
+
+
+    except:
+        return jsonify(message = 'Error')
