@@ -35,7 +35,9 @@
 <button onclick="hide1()">Incubacion preestablecida</button>
 <div id="preestablecidas" style="display: none;">
     <form method="POST" action="{{url_for('nueva_incubacion')}}" name="config_preestablecidas">
-        <select>
+        <label for="nombre">Nombre:</label><br>
+        <input type="text" name="nombre" required><br>
+        <select name="nombre_i">
             {% for i in configurations %}
             <option value="{{i['nombre']}}">{{i['nombre']}}</option>
             {% endfor %}

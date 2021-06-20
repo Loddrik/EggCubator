@@ -161,14 +161,42 @@ def nueva_incubacion():
                 session['incubacion_actual'] = request.form['nombre']
                 return redirect('/status')
         else:
-            return 'Sky is the limit'
+            if db.Incubacion.find_one({
+                "id_incubadora" : session.get('id_incubadora'),
+                "nombre" : request.form['nombre']
+            }):
+                return 'Ya existe una incubacion con ese nombre'
+            else:
+                db.Incubadora.update_one({
+                    "id_incubadora" : session.get('id_incubadora')},
+                    {
+                        "$set" : { "incubacion_actual" : request.form['nombre']},
+                        "$push" : {"incubaciones" : request.form['nombre']}
+                    })
+                
+                i_elegida = db.Predeterminadas.find_one(
+                    {
+                        "nombre" : request.form['nombre_i']
+
+                    }
+                )
+
+                db.Incubacion.insert({
+                    "nombre": request.form['nombre'],
+                    "id_incubadora" : session.get('id_incubadora'),
+                    "adv_config": i_elegida['adv_config']
+                })
+                session['incubacion_actual'] = request.form['nombre']
+                return redirect('/status')
+
+
         #tomar datos del fomrulario
         # verificar si el id y el nombre de la incubacion existe
         # si existe, enviar respuesta de datos invalidos
         # si no existe, cambiar incubacion actual en base de datos y session
         
     else:
-        predeterminated = list(db.Configuraciones_predet.find())
+        predeterminated = list(db.Predeterminadas.find())
         return render_template('logged/nueva_incubacion.html', configurations = predeterminated)
 
 
