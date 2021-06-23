@@ -1,13 +1,20 @@
 {% extends 'logged/base_logged.html' %}
 
 {% block body %}
+<head>
+    <meta charset="UTF-8">
+    <title>Creating Real-Time Charts with Flask</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css" rel="stylesheet">
+</head>
+
 <div class="pricing-header px-5 py-3 pt-md-5 pb-md-4 mx-auto">
     <div class="card">
         <h5 class="card-header">Configuraciones de {{ incubacion['nombre']}}</h5>
         <div class="card-body">
             <ul>
                 <li>Rangos de humedad: {{ incubacion['adv_config']['humedad'][0]}} , {{ incubacion['adv_config']['humedad'][1]}}</li>
-                <li>Rangos de humedad: {{ incubacion['adv_config']['humedad'][0]}} , {{ incubacion['adv_config']['humedad'][1]}}</li>
+                <li>Rangos de humedad: {{ incubacion['adv_config']['temperatura'][0]}} , {{ incubacion['adv_config']['temperatura'][1]}}</li>
                 <li>Rotaciones por dia: {{incubacion['adv_config']['rotaciones']}}</li>
                 <li>Dias de incubacion: {{incubacion['adv_config']['dias']}}</li>
             </ul>      
@@ -15,23 +22,166 @@
     </div>
 </div>
 
-<div class="pricing-header px-5 py-3 pt-md-5 pb-md-4 mx-auto">
-    <div class="card">
-        <div class="card-body">
-        <h5 class="card-title">Temperatura</h5>
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <canvas id="canvas"></canvas>
+                </div>
+            </div>
         </div>
-        <img src="https://1.bp.blogspot.com/-cwwBteLglDs/WT2aTwFPLDI/AAAAAAAAAzk/x1svS4KG75EqQFjhQhnyaETWOrfBEMhowCLcB/s1600/temperaturasL7.png" class="card-img-bottom" alt="Grafico">
     </div>
 </div>
 
-<div class="pricing-header px-5 py-3 pt-md-5 pb-md-4 mx-auto">
-    <div class="card">
-        <div class="card-body">
-        <h5 class="card-title">Humedad</h5>
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <canvas id="canvas2"></canvas>
+                </div>
+            </div>
         </div>
-        <img src="https://1.bp.blogspot.com/-cwwBteLglDs/WT2aTwFPLDI/AAAAAAAAAzk/x1svS4KG75EqQFjhQhnyaETWOrfBEMhowCLcB/s1600/temperaturasL7.png" class="card-img-bottom" alt="Grafico">
     </div>
 </div>
 
+<!--suppress JSUnresolvedLibraryURL -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<!--suppress JSUnresolvedLibraryURL -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<!--suppress JSUnresolvedLibraryURL -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+<script>
+    $(document).ready(function () {
+        const config = {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: "Random Dataset",
+                    backgroundColor: 'rgb(255, 99, 132)',
+                    borderColor: 'rgb(255, 99, 132)',
+                    data: [],
+                    fill: false,
+                }],
+            },
+            options: {
+                responsive: true,
+                title: {
+                    display: true,
+                    text: 'Creating Real-Time Charts with Flask'
+                },
+                tooltips: {
+                    mode: 'index',
+                    intersect: false,
+                },
+                hover: {
+                    mode: 'nearest',
+                    intersect: true
+                },
+                scales: {
+                    xAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Time'
+                        }
+                    }],
+                    yAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Value'
+                        }
+                    }]
+                }
+            }
+        };
+
+        const context = document.getElementById('canvas').getContext('2d');
+
+        const lineChart = new Chart(context, config);
+
+        const source = new EventSource("/chart-data-hum");
+
+        source.onmessage = function (event) {
+            const data = JSON.parse(event.data);
+            if (config.data.labels.length === 20) {
+                config.data.labels.shift();
+                config.data.datasets[0].data.shift();
+            }
+            config.data.labels.push(data.time);
+            config.data.datasets[0].data.push(data.value);
+            lineChart.update();
+        }
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        const config = {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: "Random Dataset",
+                    backgroundColor: 'rgb(255, 99, 132)',
+                    borderColor: 'rgb(255, 99, 132)',
+                    data: [],
+                    fill: false,
+                }],
+            },
+            options: {
+                responsive: true,
+                title: {
+                    display: true,
+                    text: 'Creating Real-Time Charts with Flask'
+                },
+                tooltips: {
+                    mode: 'index',
+                    intersect: false,
+                },
+                hover: {
+                    mode: 'nearest',
+                    intersect: true
+                },
+                scales: {
+                    xAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Time'
+                        }
+                    }],
+                    yAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Value'
+                        }
+                    }]
+                }
+            }
+        };
+
+        const context = document.getElementById('canvas2').getContext('2d');
+
+        const lineChart = new Chart(context, config);
+
+        const source = new EventSource("/chart-data-temp");
+
+        source.onmessage = function (event) {
+            const data = JSON.parse(event.data);
+            if (config.data.labels.length === 20) {
+                config.data.labels.shift();
+                config.data.datasets[0].data.shift();
+            }
+            config.data.labels.push(data.time);
+            config.data.datasets[0].data.push(data.value);
+            lineChart.update();
+        }
+    });
+</script>
 
 {% endblock %}

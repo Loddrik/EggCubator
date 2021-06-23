@@ -1,9 +1,11 @@
 from contextlib import redirect_stderr
-from flask import Flask, render_template,request,url_for,redirect,session
+from flask import Flask, render_template,request,url_for,redirect,session, Response
 from flask import json
 from flask.json import jsonify
 from flask_pymongo import PyMongo
 from pymongo import message
+from datos import *
+import time
 
 app = Flask(__name__)
 app.config['MONGO_URI'] = 'mongodb+srv://loddrik:hermosilla@eggcuabtor.juckj.mongodb.net/EggCubator?retryWrites=true&w=majority'
@@ -11,7 +13,7 @@ app.secret_key = 'a'
 cliente = PyMongo(app)
 db = cliente.db
 
-
+random.seed()
 
 @app.route('/')
 def home():
@@ -99,9 +101,9 @@ def log_user():
                         return redirect('/nueva_incubacion')
                     
                     else:
-                        print('a')
                         session['incubacion_actual'] = incubadora['incubacion_actual']
                         session['incubaciones'] = incubadora['incubaciones']
+                        session['configs'] = db.Incubacion.find_one({ "nombre" : session.get('incubacion_actual'), "id_incubadora" : session.get('id_incubadora')})['adv_config']
                         return redirect ('/')
                         # ENVIAR A NOTIFICACIONES 
                        
@@ -211,13 +213,60 @@ def status():
         if not incubacion:
             return redirect('/nueva_incubacion')
         else:
-            print(incubacion['adv_config']['humedad'][0])
             return render_template('/logged/status.html', incubacion = incubacion)
-
-
     except:
         return jsonify(message = 'Error')
+
+def generate_humedad(min,max):
+    # incubacion = db.Incubacion.find_one({
+    #             "id_incubadora" : session.get('id_incubadora'),
+    #             "nombre" : session.get('incubacion_actual')
+    #         })
+
+    while True:
+        json_data = json.dumps(
+            {
+                "time": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                # "value" : str(random.randint(20,30))
+                "value": gen_hum(min,max),
+            }
+        )
+        yield f"data:{json_data}\n\n"
+        time.sleep(1)
+
+def generate_temperatura(min,max):
+    # incubacion = db.Incubacion.find_one({
+    #             "id_incubadora" : session.get('id_incubadora'),
+    #             "nombre" : session.get('incubacion_actual')
+    #         })
+    while True:
+        json_data = json.dumps(
+            {
+                "time": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                # "value" : str(random.randint(20,30))
+                "value": gen_temp(min,max),
+            }
+        )
+        yield f"data:{json_data}\n\n"
+        time.sleep(1)
+
+@app.route('/chart-data-hum')
+def chart_data_hum():
+    min = session.get('configs')['humedad'][0]
+    max = session.get('configs')['humedad'][1]
+    return Response(generate_humedad(min,max), mimetype = "text/event-stream")
+
+@app.route('/chart-data-temp')
+def chart_data_temp():
+    min = session.get('configs')['temperatura'][0]
+    max = session.get('configs')['temperatura'][1]
+    return Response(generate_temperatura(min,max), mimetype = "text/event-stream")
+        
 
 @app.route('/notificaciones')
 def notificaciones():
     return render_template('/logged/notificaciones.html')
+
+@app.route('/data')
+def data():
+    return gen_hum(20,30)
