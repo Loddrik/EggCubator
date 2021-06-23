@@ -1,50 +1,62 @@
 {% extends 'logged/base_logged.html' %}
 {% block body %}
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
 
-<button onclick="hide()">Incubacion personalizada</button>
+    <button class="btn btn-primary col-md-6 mb-3" onclick="hide()">Incubacion personalizada</button>
 
-<div id="personalizadas" style="display: none;">
-    <form method="POST" action="{{url_for('nueva_incubacion')}}">
-        <label for="nombre">Nombre:</label><br>
-        <input type="text" name="nombre" required><br>
+    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center" id="personalizadas" style="display: none;">
+        <form method="POST" action="{{url_for('nueva_incubacion')}}" >
+            <div class="form-group row">
+                <div class="col-sm-4 col-form-label">
+                    <label class ="text-light">Nombre de configuración</label>
+                    <input name ="nombre" type="text" class="form-control" placeholder="Incubacion 1" required>
+                </div>
+                <div class="col-sm-4 col-form-label">
+                    <label class ="text-light">Rango de temperatura (°C)</label>
+                    <input name ="temperatura_sup" type="number" class="form-control" placeholder="Maxima" required>
+                    <input name ="temperatura_inf" type="number" class="form-control" placeholder="Minima" required>
+                </div>
+                <div class="col-sm-4 col-form-label">
+                    <label class ="text-light">Rango de humedad (en %)</label>
+                    <input name ="humedad_sup" type="number" class="form-control" placeholder="Maxima" required>
+                    <input name ="humedad_inf" type="number" class="form-control" placeholder="Minima" required>
 
-        <label>Rango de humedad:</label><br>
-        <input type="number" name="humedad_sup" placeholder="Humedad maxima" required>
-        <input type="number" name="humedad_inf" placeholder="Humedad minima" required><br>
+                </div>                    
+                <div class="col-sm-4 col-form-label">
+                    <label class ="text-light">Rotaciones (por días)</label>
+                    <input name ="rotaciones" type="number" class="form-control" placeholder="3" required>
+                </div>
+                <div class="col-sm-4 col-form-label">
+                    <label class ="text-light">Días de incubación</label>
+                    <input name ="dias" type="number" class="form-control" placeholder="30" required>
+                </div>
 
-        <label >Rangos temperatura:</label><br>
-        <input type="number" name="temperatura_sup" placeholder="Tempreratura maxima" required>
-        <input type="number" name="temperatura_inf" placeholder="Temperatura minima" required><br>
+            </div>
+            <button class="btn btn-success col-md-6 mb-3" type="submit" value="Submit" onclick="pop_out()">Agregar configuración</button>
+        </form>
+    </div>
 
-        <label for="rotaciones">Rotaciones por dia:</label>
-        <input type="number" name="rotaciones" required><br>
 
-        <label for="dias">Dias de incubacion:</label>
-        <input type="number" name="dias" required><br>
-
-        <input type="hidden" value="personalizada" name="n_formulario">
-        
-
-        <input type="submit" onclick="pop_out()" value="Submit"><br>
-    </form>
-</div>
-
-<br>
-<br>
-
-<button onclick="hide1()">Incubacion preestablecida</button>
-<div id="preestablecidas" style="display: none;">
-    <form method="POST" action="{{url_for('nueva_incubacion')}}" name="config_preestablecidas">
-        <label for="nombre">Nombre:</label><br>
-        <input type="text" name="nombre" required><br>
-        <select name="nombre_i">
-            {% for i in configurations %}
-            <option value="{{i['nombre']}}">{{i['nombre']}}</option>
-            {% endfor %}
-        </select>
-        <input onclick="pop_out()" type="submit" value="Submit"><br>
-        <input type="hidden" value="preestablecida" name="n_formulario">
-    </form>    
+    <button class="btn btn-primary col-md-6 mb-3" onclick="hide1()">Incubacion preestablecida</button>
+    <div id="preestablecidas" style="display: none;">  
+        <form method="POST" action="{{url_for('nueva_incubacion')}}" name="config_preestablecidas">
+            <div class="form-group row">
+            <div class="col-sm-6 col-form-label">
+                <label class ="text-light">Nombre de Incubación</label>
+                <input name ="nombre" type="text" class="form-control" placeholder="Incubación 1" required>
+            </div>
+                <div class="col-sm-6 col-form-label">
+                    <label class ="text-light">Seleccione la configuracion</label>
+                    <select class="form-control form-control" name ="nombre_i" required>
+                        {% for i in configurations %}
+                        <option value="{{i['nombre']}}">{{i['nombre']}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <button class="btn btn-success col-md-6 mb-3" value="Submit" type="submit" onclick="pop_out()">Inciar</button>
+        </form>
+    </div>
 </div>
 
 <script>

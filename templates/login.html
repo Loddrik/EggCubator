@@ -1,13 +1,18 @@
 {% extends 'base.html' %}
 
 {% block body %}
-<form method="POST" action="{{url_for('log_user')}}">
-    <label for="username">Username:</label><br>
-    <input type="text" name="username"><br>
-
-    <label for="password" >Password:</label><br>
-    <input type="password" name="password"><br>
-
-    <input type="submit" value="Submit"><br>
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-3 mx-auto text-center">
+  <form method="POST" action="{{url_for('log_user')}}">
+      <div class="form-group row text-center">
+          <div class="col-sm-6 col-form-label mx-auto text-center">
+              <label class ="text-light " for="validationTooltip01">Nombre</label>
+              <input name ="username" type="text" class="form-control" placeholder="Pepe" required>
+              
+              <label class ="text-light" for="validationTooltip02">Contraseña</label>
+              <input name ="password" type="password" class="form-control" placeholder="" required>
+          </div>
+      </div>
+      <button class="btn btn-success col-md-6 mb-3" type="submit" value="Submit">Inciar sesión</button>
   </form>
+</div>
 {% endblock %}
