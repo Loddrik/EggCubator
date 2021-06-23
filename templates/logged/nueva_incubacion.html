@@ -10,31 +10,31 @@
             <div class="form-group row">
                 <div class="col-sm-4 col-form-label">
                     <label class ="text-light">Nombre de configuración</label>
-                    <input name ="nombre" type="text" class="form-control" placeholder="Incubacion 1" required>
+                    <input name ="nombre" type="text" pattern="[a-zA-Z0-9\s]{1,20}" class="form-control" placeholder="Incubacion 1" required>
                 </div>
                 <div class="col-sm-4 col-form-label">
                     <label class ="text-light">Rango de temperatura (°C)</label>
                     <div class="input-group mb-3">
-                        <input name ="temperatura_inf" type="number" class="form-control" placeholder="Minima" required>
+                        <input name ="temperatura_inf" type="number" min="0" max="100" class="form-control" placeholder="Minima" required>
                         <span class="input-group-text">-</span>
-                        <input name ="temperatura_sup" type="number" class="form-control" placeholder="Maxima" required>
+                        <input name ="temperatura_sup" type="number" min="0" max="100" class="form-control" placeholder="Maxima" required>
                     </div>
                 </div>
                 <div class="col-sm-4 col-form-label">
                     <label class ="text-light">Rango de humedad (en %)</label>
                     <div class="input-group mb-3">
-                        <input name ="humedad_inf" type="number" class="form-control" placeholder="Minima" required>
+                        <input name ="humedad_inf" type="number" min="0" max="100" class="form-control" placeholder="Minima" required>
                         <span class="input-group-text">-</span>
-                        <input name ="humedad_sup" type="number" class="form-control" placeholder="Maxima" required>
+                        <input name ="humedad_sup" type="number" min="0" max="100" class="form-control" placeholder="Maxima" required>
                     </div>
                 </div>                    
                 <div class="col-sm-4 col-form-label">
                     <label class ="text-light">Rotaciones (por días)</label>
-                    <input name ="rotaciones" type="number" class="form-control" placeholder="3" required>
+                    <input name ="rotaciones" type="number" min="0" max="100" class="form-control" placeholder="3" required>
                 </div>
                 <div class="col-sm-4 col-form-label">
                     <label class ="text-light">Días de incubación</label>
-                    <input name ="dias" type="number" class="form-control" placeholder="30" required>
+                    <input name ="dias" type="number" min="0" max="100" class="form-control" placeholder="30" required>
                 </div>
                 <input type="hidden" value="personalizada" name="n_formulario">
             </div>
@@ -49,7 +49,7 @@
             <div class="form-group row">
             <div class="col-sm-6 col-form-label">
                 <label class ="text-light">Nombre de Incubación</label>
-                <input name ="nombre" type="text" class="form-control" placeholder="Incubación 1" required>
+                <input name ="nombre" type="text" pattern="[a-zA-Z0-9\s]{1,20}" class="form-control" placeholder="Incubación 1" required>
             </div>
                 <div class="col-sm-6 col-form-label">
                     <label class ="text-light">Seleccione la configuracion</label>

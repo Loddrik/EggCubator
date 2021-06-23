@@ -6,7 +6,7 @@
             <div class="form-group row text-center">
                 <div class="col-sm-6 col-form-label">
                     <label class ="text-light " for="validationTooltip01">Nombre</label>
-                    <input name ="username" type="text" class="form-control" placeholder="Pepe" required>
+                    <input name ="username" pattern="[a-zA-Z0-9\s]{1,35}" type="text" class="form-control" placeholder="Pepe" required>
                 </div>
                 <div class="col-sm-6 col-form-label">
                     <label class ="text-light" for="validationTooltip02">Mail</label>
@@ -18,7 +18,7 @@
                 </div>
                 <div class="col-sm-6 col-form-label">
                     <label class ="text-light" for="validationTooltip02">IncubadoraID</label>
-                    <input name ="id_incubadora" type="number" class="form-control" placeholder="123" required>
+                    <input name ="id_incubadora" min="0" max="1000" type="number" class="form-control" placeholder="123" required>
                 </div>
             
             </div>
