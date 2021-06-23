@@ -30,7 +30,7 @@
                     <label class ="text-light">Días de incubación</label>
                     <input name ="dias" type="number" class="form-control" placeholder="30" required>
                 </div>
-
+                <input type="hidden" value="personalizada" name="n_formulario">
             </div>
             <button class="btn btn-success col-md-6 mb-3" type="submit" value="Submit" onclick="pop_out()">Agregar configuración</button>
         </form>
@@ -54,6 +54,7 @@
                     </select>
                 </div>
             </div>
+            <input type="hidden" value="preestablecida" name="n_formulario">
             <button class="btn btn-success col-md-6 mb-3" value="Submit" type="submit" onclick="pop_out()">Inciar</button>
         </form>
     </div>
