@@ -1,8 +1,9 @@
 {% extends 'logged/base_logged.html' %}
 {% block body %}
 <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h4 class="display-4">Iniciar incubación</h4>
 
-    <button class="btn btn-primary col-md-6 mb-3" onclick="hide()">Incubacion personalizada</button>
+    <button class="btn btn-primary col-md-6 mb-3" id="personalizadasbt" onclick="hide()">Incubacion personalizada</button>
 
     <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center" id="personalizadas" style="display: none;">
         <form method="POST" action="{{url_for('nueva_incubacion')}}" >
@@ -42,7 +43,7 @@
     </div>
 
 
-    <button class="btn btn-primary col-md-6 mb-3" onclick="hide1()">Incubacion preestablecida</button>
+    <button class="btn btn-primary col-md-6 mb-3" id="preestablecidasbt" onclick="hide1()">Incubacion preestablecida</button>
     <div id="preestablecidas" style="display: none;">  
         <form method="POST" action="{{url_for('nueva_incubacion')}}" name="config_preestablecidas">
             <div class="form-group row">
@@ -72,21 +73,28 @@
 
     function hide(){
         var x = document.getElementById("personalizadas");
+        var y = document.getElementById("preestablecidasbt");
+
         if(x.style.display == "none"){
-            x.style.display = "block";
+            x.style.display = "inline";
+            y.style.display = "none";
         }
         else{
             x.style.display = "none";
+            y.style.display = "inline";
         }
     }
 
     function hide1(){
         var x = document.getElementById("preestablecidas");
+        var y = document.getElementById("personalizadasbt");
         if(x.style.display == "none"){
-            x.style.display = "block";
+            x.style.display = "inline";
+            y.style.display = "none";
         }
         else{
             x.style.display = "none";
+            y.style.display = "inline";
         }
     }
 </script>
