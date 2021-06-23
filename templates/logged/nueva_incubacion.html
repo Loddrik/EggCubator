@@ -13,14 +13,19 @@
                 </div>
                 <div class="col-sm-4 col-form-label">
                     <label class ="text-light">Rango de temperatura (°C)</label>
-                    <input name ="temperatura_sup" type="number" class="form-control" placeholder="Maxima" required>
-                    <input name ="temperatura_inf" type="number" class="form-control" placeholder="Minima" required>
+                    <div class="input-group mb-3">
+                        <input name ="temperatura_inf" type="number" class="form-control" placeholder="Minima" required>
+                        <span class="input-group-text">-</span>
+                        <input name ="temperatura_sup" type="number" class="form-control" placeholder="Maxima" required>
+                    </div>
                 </div>
                 <div class="col-sm-4 col-form-label">
                     <label class ="text-light">Rango de humedad (en %)</label>
-                    <input name ="humedad_sup" type="number" class="form-control" placeholder="Maxima" required>
-                    <input name ="humedad_inf" type="number" class="form-control" placeholder="Minima" required>
-
+                    <div class="input-group mb-3">
+                        <input name ="humedad_inf" type="number" class="form-control" placeholder="Minima" required>
+                        <span class="input-group-text">-</span>
+                        <input name ="humedad_sup" type="number" class="form-control" placeholder="Maxima" required>
+                    </div>
                 </div>                    
                 <div class="col-sm-4 col-form-label">
                     <label class ="text-light">Rotaciones (por días)</label>

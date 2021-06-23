@@ -217,3 +217,7 @@ def status():
 
     except:
         return jsonify(message = 'Error')
+
+@app.route('/notificaciones')
+def notificaciones():
+    return render_template('/logged/notificaciones.html')
