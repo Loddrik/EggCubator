@@ -161,6 +161,7 @@ def nueva_incubacion():
                     }
                 })
                 session['incubacion_actual'] = request.form['nombre']
+                session['configs'] = db.Incubacion.find_one({ "nombre" : session.get('incubacion_actual'), "id_incubadora" : session.get('id_incubadora')})['adv_config']
                 return redirect('/status')
         else:
             if db.Incubacion.find_one({
@@ -228,7 +229,7 @@ def generate_humedad(min,max):
             {
                 "time": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
                 # "value" : str(random.randint(20,30))
-                "value": gen_hum(min,max),
+                "value": gen_hum(min,max)
             }
         )
         yield f"data:{json_data}\n\n"
@@ -244,7 +245,7 @@ def generate_temperatura(min,max):
             {
                 "time": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
                 # "value" : str(random.randint(20,30))
-                "value": gen_temp(min,max),
+                "value": gen_temp(min,max)
             }
         )
         yield f"data:{json_data}\n\n"
@@ -269,4 +270,6 @@ def notificaciones():
 
 @app.route('/data')
 def data():
-    return gen_hum(20,30)
+    min = session.get('configs')['temperatura'][0]
+    max = session.get('configs')['temperatura'][1]
+    return min + max
