@@ -268,8 +268,3 @@ def chart_data_temp():
 def notificaciones():
     return render_template('/logged/notificaciones.html')
 
-@app.route('/data')
-def data():
-    min = session.get('configs')['temperatura'][0]
-    max = session.get('configs')['temperatura'][1]
-    return min + max
