@@ -52,6 +52,7 @@ def register():
                     'id_incubadora' : id_incubadora,
                     'incubacion_actual': None,
                     'incubaciones' : []
+
                 })
                 return redirect('/log_user')
 
@@ -161,7 +162,8 @@ def nueva_incubacion():
                         "temperatura" : [request.form['temperatura_inf'],request.form['temperatura_sup']],
                         "rotaciones" : request.form['rotaciones'],
                         "dias" : request.form['dias']
-                    }
+                    },
+                    "notificaciones" : []
                 })
                 session['incubacion_actual'] = request.form['nombre']
                 session['configs'] = db.Incubacion.find_one({ "nombre" : session.get('incubacion_actual'), "id_incubadora" : session.get('id_incubadora')})['adv_config']
@@ -190,7 +192,8 @@ def nueva_incubacion():
                 db.Incubacion.insert({
                     "nombre": request.form['nombre'],
                     "id_incubadora" : session.get('id_incubadora'),
-                    "adv_config": i_elegida['adv_config']
+                    "adv_config": i_elegida['adv_config'],
+                    "notificaciones": []
                 })
                 session['incubacion_actual'] = request.form['nombre']
                 session['configs'] = db.Incubacion.find_one({ "nombre" : session.get('incubacion_actual'), "id_incubadora" : session.get('id_incubadora')})['adv_config']
