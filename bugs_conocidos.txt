@@ -1,0 +1,2 @@
+1.Al crearse una cuenta e iniciar sesion inmediatamente, no se generan los gráficos.
+2.Al ingresar a la ruta http://127.0.0.1:5000/status sin estar logeado, se muestra la vista de los gráficos pero sin generar gráficos, también cambian las opciones en el marco como si se estuviese logeado.
