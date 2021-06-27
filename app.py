@@ -34,7 +34,7 @@ def register():
 
         # Verificamos que nadie este registrado con la misma incubadora, nombre y mail.
         if db.Usuario.find_one( { "$or":[{"id_incubadora" : id_incubadora} , {"username" : username}, {"mail" : mail}]}) != None :
-            return jsonify(message = "Usuario ya registrado")
+            return render_template('registro.html',message = "Usuario ya registrado")
         # En caso de que no este registrado, lo registramos
         else:
             try:
@@ -56,7 +56,7 @@ def register():
                 return redirect('/log_user')
 
             except:
-                return 'Error en el ingreso de datos.'
+                return render_template('registro.html',message = "Ha ocurrido un error con la conexion al cluster, por favor comuniquese con nosotros.")
     
     else:
         return render_template('registro.html')
@@ -79,7 +79,7 @@ def log_user():
             
 
             if usuario == None:
-                return jsonify(message = "Nombre de usuario y/o contrasena incorrectos")
+                return render_template('login.html',message = "Usuario o contraseña incorrectos.")
             else:
                 session['username'] = usuario['username']
                 session['password'] = usuario['password']
@@ -95,7 +95,7 @@ def log_user():
                 "id_incubadora" : session.get('id_incubadora')
                 })
                 if incubadora == None:
-                    return jsonify(message= "Error, no existe tu incubadora.")
+                    return render_template('login.html',message = "No existe tu número de incubadora.")
                 else:
                     if incubadora['incubacion_actual'] == None:
                         return redirect('/nueva_incubacion')
@@ -109,7 +109,7 @@ def log_user():
                        
         except:
             # Enviar a vista de error
-            return jsonify(message = "Something is wrong with connection to database")
+            return render_template('login.html',message = "Error con la conexion a la base de datos, por favor comunicate con nosotros.")
     else:
         return render_template('login.html')
 
@@ -142,7 +142,7 @@ def nueva_incubacion():
                 "id_incubadora" : session.get('id_incubadora'),
                 "nombre" : request.form['nombre']
             }):
-                return 'Ya existe una incubacion con ese nombre'
+                return render_template('login.html', message = "Ya existe una incubacion con ese nombre.")
             
             else:
                 
@@ -171,7 +171,7 @@ def nueva_incubacion():
                 "id_incubadora" : session.get('id_incubadora'),
                 "nombre" : request.form['nombre']
             }):
-                return 'Ya existe una incubacion con ese nombre'
+                return render_template('login.html', message = "Ya existe una incubacion con ese nombre.")
             else:
                 db.Incubadora.update_one({
                     "id_incubadora" : session.get('id_incubadora')},

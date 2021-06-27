@@ -15,5 +15,11 @@
       </div>
       <button class="btn btn-success col-md-6 mb-3" type="submit" value="Submit">Inciar sesión</button>
   </form>
+  {% if message%}
+    <div class="alert alert-danger" role="alert">
+      Usted ya esta registrado!
+    </div>
+  {% endif%}
 </div>
+  
 {% endblock %}
