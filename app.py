@@ -193,6 +193,7 @@ def nueva_incubacion():
                     "adv_config": i_elegida['adv_config']
                 })
                 session['incubacion_actual'] = request.form['nombre']
+                session['configs'] = db.Incubacion.find_one({ "nombre" : session.get('incubacion_actual'), "id_incubadora" : session.get('id_incubadora')})['adv_config']
                 return redirect('/status')
 
 
