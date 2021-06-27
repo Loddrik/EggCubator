@@ -267,4 +267,3 @@ def chart_data_temp():
 @app.route('/notificaciones')
 def notificaciones():
     return render_template('/logged/notificaciones.html')
-
