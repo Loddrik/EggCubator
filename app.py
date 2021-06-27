@@ -278,6 +278,25 @@ def notificaciones():
     return render_template('/logged/notificaciones.html')
 
 
+@app.route('/historial', methods = ['GET'])
+def historial():
+    try:
+        username = session.get('username')
+        if username == None:
+            return render_template('login.html')
+
+        incubaciones = list(db.Incubacion.find({
+            "id_incubadora" : session.get('id_incubadora')
+        }))
+
+        return render_template('/logged/historial.html' , incubaciones = incubaciones)
+
+
+    except: return render_template('/logged/historial.html')
+
+
+
+
 
 if __name__ == "__main__":
 	app.run(debug=True)
