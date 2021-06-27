@@ -131,6 +131,9 @@ def logout():
 
 @app.route('/nueva_incubacion',methods = ['GET','POST'])
 def nueva_incubacion():
+    username = session.get('username')
+    if username == None:
+        return render_template('login.html')
     if request.method == 'POST':
         
         if request.form['n_formulario'] == 'personalizada':
@@ -206,6 +209,9 @@ def nueva_incubacion():
 @app.route('/status', methods = ['GET'])
 def status():
     try:
+        username = session.get('username')
+        if username == None:
+            return render_template('login.html')
         incubacion = db.Incubacion.find_one({
             "nombre" : session.get('incubacion_actual'),
             "id_incubadora" : session.get('id_incubadora')
@@ -266,4 +272,12 @@ def chart_data_temp():
 
 @app.route('/notificaciones')
 def notificaciones():
+    username = session.get('username')
+    if username == None:
+        return render_template('login.html')
     return render_template('/logged/notificaciones.html')
+
+
+
+if __name__ == "__main__":
+	app.run(debug=True)
