@@ -7,6 +7,23 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css" rel="stylesheet">
 </head>
+<div style="background-color: #2E2E2E;" >
+    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+        <h4 class="display-4">Notificaciones</h4>
+        <div style=" display: block; height : 300px; overflow-y: scroll;">
+            <table id="tabla1" class="table table-dark table-sm"> 
+                <thead id="fila">
+                    <tr class="table-active" style="font-size:20px">
+                        <th scope="col">Fecha y hora</th>
+                        <th scope="col">Detalle</th>
+                    </tr>
+                    
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+
 <div style="background-color: #2E2E2E;">
     <div class="pricing-header px-5 py-3 pt-md-5 pb-md-4 mx-auto">
         <div class="card">
@@ -105,11 +122,30 @@
                 config.data.labels.shift();
                 config.data.datasets[0].data.shift();
             }
+            if(data.value > data.max){
+                addRow('tabla1',data.time,'Humedad sobre los limites.');
+            }
+            else if(data.value < data.min){
+                addRow("tabla1",data.time,"Humedad bajo los limites.");
+            }
             config.data.labels.push(data.time);
             config.data.datasets[0].data.push(data.value);
             lineChart.update();
         }
     });
+
+    function addRow(tableID, text,text2){
+        let tableRef = document.getElementById(tableID);
+
+        let newRow = tableRef.insertRow(1);
+
+        let newCell1 = newRow.insertCell(0); 
+        let newCell2 = newRow.insertCell(1); 
+
+        
+        newCell1.innerHTML = text
+        newCell2.innerHTML = text2
+    }
 </script>
 
 <script>
@@ -170,6 +206,12 @@
             if (config.data.labels.length === 10) {
                 config.data.labels.shift();
                 config.data.datasets[0].data.shift();
+            }
+            if(data.value > data.max){
+                addRow('tabla1',data.time,'Temperatura sobre los limites.');
+            }
+            else if(data.value < data.min){
+                addRow("tabla1",data.time,"Temperatura bajo los limites.");
             }
             config.data.labels.push(data.time);
             config.data.datasets[0].data.push(data.value);

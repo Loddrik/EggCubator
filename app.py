@@ -238,7 +238,8 @@ def generate_humedad(min,max):
         json_data = json.dumps(
             {
                 "time": datetime.now().strftime("%H:%M:%S"),
-                # "value" : str(random.randint(20,30))
+                "min" : min,
+                "max" : max,
                 "value": gen_hum(min,max)
             }
         )
@@ -254,7 +255,8 @@ def generate_temperatura(min,max):
         json_data = json.dumps(
             {
                 "time": datetime.now().strftime("%H:%M:%S"),
-                # "value" : str(random.randint(20,30))
+                "min" : min,
+                "max" : max,
                 "value": gen_temp(min,max)
             }
         )
