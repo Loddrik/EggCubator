@@ -5,17 +5,18 @@
 <div class="pricing-header px-5 py-3 pt-md-5 pb-md-4 mx-auto text-center">
     <h4 class="display-4">Historial Incubaciones</h4>
     {% for i in incubaciones %}
-<button class="accordion text-center">{{loop.index}} - {{ i['nombre']}}</button>
-<div class="panel">
-    <div class="card-body">					
-        Rangos de humedad: {{ i['adv_config']['humedad'][0]}} , {{ i['adv_config']['humedad'][1]}}<br>
-        Rangos de temperatura: {{ i['adv_config']['temperatura'][0]}} , {{ i['adv_config']['temperatura'][1]}}<br>
-        Rotaciones por dia: {{i['adv_config']['rotaciones']}}<br>
-        Dias de incubacion: {{i['adv_config']['dias']}}<br>
-    </div>
-</div>
+  <button class="accordion text-center">{{loop.index}} - {{ i['nombre']}}</button>
+  <div class="panel">
+      <div class="card-body">					
+          Rangos de humedad: {{ i['adv_config']['humedad'][0]}} , {{ i['adv_config']['humedad'][1]}}<br>
+          Rangos de temperatura: {{ i['adv_config']['temperatura'][0]}} , {{ i['adv_config']['temperatura'][1]}}<br>
+          Rotaciones por dia: {{i['adv_config']['rotaciones']}}<br>
+          Dias de incubacion: {{i['adv_config']['dias']}}<br>
+      </div>
+  </div>
 
 {% endfor %}
+</div>
 
     
 

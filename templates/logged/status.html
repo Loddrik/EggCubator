@@ -21,28 +21,21 @@
             </div>
         </div>
     </div>
-
-    <div class="container">
+    <div class="container px-4 py-5">
         <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-body">
-                        <canvas id="canvas"></canvas>
-                    </div>
+            <div class="col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <canvas id="canvas"></canvas>
                 </div>
             </div>
-        </div>
-    </div>
-    <br>
-
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-body">
-                        <canvas id="canvas2"></canvas>
-                    </div>
+            </div>
+            <div class="col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <canvas id="canvas2"></canvas>
                 </div>
+            </div>
             </div>
         </div>
     </div>
@@ -108,7 +101,7 @@
 
         source.onmessage = function (event) {
             const data = JSON.parse(event.data);
-            if (config.data.labels.length === 20) {
+            if (config.data.labels.length === 10) {
                 config.data.labels.shift();
                 config.data.datasets[0].data.shift();
             }
@@ -174,7 +167,7 @@
 
         source.onmessage = function (event) {
             const data = JSON.parse(event.data);
-            if (config.data.labels.length === 20) {
+            if (config.data.labels.length === 10) {
                 config.data.labels.shift();
                 config.data.datasets[0].data.shift();
             }
