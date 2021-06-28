@@ -7,53 +7,56 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css" rel="stylesheet">
 </head>
-<div style="background-color: #2E2E2E;" >
-    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-        <h4 class="display-4">Notificaciones</h4>
-        <div style=" display: block; height : 300px; overflow-y: scroll;">
-            <table id="tabla1" class="table table-dark table-sm"> 
-                <thead id="fila">
-                    <tr class="table-active" style="font-size:20px">
-                        <th scope="col">Fecha y hora</th>
-                        <th scope="col">Detalle</th>
-                    </tr>
-                    
-                </thead>
-            </table>
+<div class="container px-4 py-5">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="card text-white bg-dark">
+                <h5 class="card-header">Configuraciones de {{ incubacion['nombre']}}</h5>
+                <div class="card-body">
+                    <ul>
+                        <li>Rangos de humedad: {{ incubacion['adv_config']['humedad'][0]}} , {{ incubacion['adv_config']['humedad'][1]}}</li>
+                        <li>Rangos de temperatura: {{ incubacion['adv_config']['temperatura'][0]}} , {{ incubacion['adv_config']['temperatura'][1]}}</li>
+                        <li>Rotaciones por dia: {{incubacion['adv_config']['rotaciones']}}</li>
+                        <li>Dias de incubacion: {{incubacion['adv_config']['dias']}}</li>
+                    </ul>      
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+        <div class="card bg-dark">
+            <div class="card-body">
+                <div style=" display: block; height : 163px; overflow-y: scroll;">
+                    <table id="tabla1" class="table table-dark table-sm"> 
+                        <thead id="fila">
+                            <tr class="table-active" style="font-size:15px">
+                                <th scope="col">Fecha y hora</th>
+                                <th scope="col">Detalle</th>
+                            </tr>
+                            
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
         </div>
     </div>
 </div>
 
-<div style="background-color: #2E2E2E;">
-    <div class="pricing-header px-5 py-3 pt-md-5 pb-md-4 mx-auto">
-        <div class="card">
-            <h5 class="card-header">Configuraciones de {{ incubacion['nombre']}}</h5>
+<div class="container px-4 py-5">
+    <div class="row">
+        <div class="col-sm-6">
+        <div class="card bg-dark">
             <div class="card-body">
-                <ul>
-                    <li>Rangos de humedad: {{ incubacion['adv_config']['humedad'][0]}} , {{ incubacion['adv_config']['humedad'][1]}}</li>
-                    <li>Rangos de temperatura: {{ incubacion['adv_config']['temperatura'][0]}} , {{ incubacion['adv_config']['temperatura'][1]}}</li>
-                    <li>Rotaciones por dia: {{incubacion['adv_config']['rotaciones']}}</li>
-                    <li>Dias de incubacion: {{incubacion['adv_config']['dias']}}</li>
-                </ul>      
+                <canvas id="canvas"></canvas>
             </div>
         </div>
-    </div>
-    <div class="container px-4 py-5">
-        <div class="row">
-            <div class="col-sm-6">
-            <div class="card">
-                <div class="card-body">
-                    <canvas id="canvas"></canvas>
-                </div>
+        </div>
+        <div class="col-sm-6">
+        <div class="card bg-dark">
+            <div class="card-body">
+                <canvas id="canvas2"></canvas>
             </div>
-            </div>
-            <div class="col-sm-6">
-            <div class="card">
-                <div class="card-body">
-                    <canvas id="canvas2"></canvas>
-                </div>
-            </div>
-            </div>
+        </div>
         </div>
     </div>
 </div>
@@ -78,10 +81,16 @@
                 }],
             },
             options: {
+                legend: {
+                    labels: {
+                        fontColor: "white",
+                    }
+                },
                 responsive: true,
                 title: {
                     display: true,
-                    text: 'Humedad en "Tiempo real" '
+                    text: 'Humedad en "Tiempo real" ',
+                    fontColor: 'white'
                 },
                 tooltips: {
                     mode: 'index',
@@ -96,14 +105,28 @@
                         display: true,
                         scaleLabel: {
                             display: true,
-                            labelString: 'Time'
+                            labelString: 'Time',
+                            fontColor: 'white'
+                        },
+                        ticks:{
+                            fontColor: 'white'
+                        },
+                        gridLines:{
+                            color: '#949494'
                         }
                     }],
                     yAxes: [{
                         display: true,
                         scaleLabel: {
                             display: true,
-                            labelString: 'Value'
+                            labelString: 'Value',
+                            fontColor: 'white'
+                        },
+                        ticks:{
+                            fontColor: 'white'
+                        },
+                        gridLines:{
+                            color: '#949494'
                         }
                     }]
                 }
@@ -163,10 +186,16 @@
                 }],
             },
             options: {
+                legend: {
+                    labels: {
+                        fontColor: "white",
+                    }
+                },
                 responsive: true,
                 title: {
                     display: true,
-                    text: 'Temperatura en "Tiempo real" '
+                    text: 'Temperatura en "Tiempo real" ',
+                    fontColor: 'white'
                 },
                 tooltips: {
                     mode: 'index',
@@ -181,14 +210,28 @@
                         display: true,
                         scaleLabel: {
                             display: true,
-                            labelString: 'Time'
+                            labelString: 'Time',
+                            fontColor: 'white'
+                        },
+                        ticks:{
+                            fontColor: 'white'
+                        },
+                        gridLines:{
+                            color: '#949494'
                         }
                     }],
                     yAxes: [{
                         display: true,
                         scaleLabel: {
                             display: true,
-                            labelString: 'Value'
+                            labelString: 'Value',
+                            fontColor: 'white'
+                        },
+                        ticks:{
+                            fontColor: 'white'
+                        },
+                        gridLines:{
+                            color: '#949494'
                         }
                     }]
                 }
