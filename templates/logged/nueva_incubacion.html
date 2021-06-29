@@ -6,26 +6,29 @@
     <button class="btn btn-primary col-md-6 mb-3" id="personalizadasbt" onclick="hide()">Incubacion personalizada</button>
 
     <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center" id="personalizadas" style="display: none;">
+        <div class="alert alert-warning" id="personalizadas" role="alert">
+            Asegurese que sus valores mínimos sean menores a los máximos.
+          </div>
         <form method="POST" action="{{url_for('nueva_incubacion')}}" >
             <div class="form-group row">
                 <div class="col-sm-4 col-form-label">
                     <label class ="text-light">Nombre de configuración</label>
-                    <input name ="nombre" type="text" pattern="[a-zA-Z0-9\s]{1,20}" class="form-control" placeholder="Incubacion 1" required>
+                    <input name ="nombre" type="text" pattern="[a-zA-Z0-9\s]{1,20}" class="form-control" placeholder="Incubación 1" required>
                 </div>
                 <div class="col-sm-4 col-form-label">
                     <label class ="text-light">Rango de temperatura (°C)</label>
                     <div class="input-group mb-3">
-                        <input name ="temperatura_inf" type="number" min="0" max="100" class="form-control" placeholder="Minima" required>
+                        <input name ="temperatura_inf" type="number" min="0" max="100" class="form-control" placeholder="Mínima" required>
                         <span class="input-group-text">-</span>
-                        <input name ="temperatura_sup" type="number" min="0" max="100" class="form-control" placeholder="Maxima" required>
+                        <input name ="temperatura_sup" type="number" min="0" max="100" class="form-control" placeholder="Máxima" required>
                     </div>
                 </div>
                 <div class="col-sm-4 col-form-label">
                     <label class ="text-light">Rango de humedad (en %)</label>
                     <div class="input-group mb-3">
-                        <input name ="humedad_inf" type="number" min="0" max="100" class="form-control" placeholder="Minima" required>
+                        <input name ="humedad_inf" type="number" min="0" max="100" class="form-control" placeholder="Mínima" required>
                         <span class="input-group-text">-</span>
-                        <input name ="humedad_sup" type="number" min="0" max="100" class="form-control" placeholder="Maxima" required>
+                        <input name ="humedad_sup" type="number" min="0" max="100" class="form-control" placeholder="Máxima" required>
                     </div>
                 </div>                    
                 <div class="col-sm-4 col-form-label">
@@ -52,7 +55,7 @@
                 <input name ="nombre" type="text" pattern="[a-zA-Z0-9\s]{1,20}" class="form-control" placeholder="Incubación 1" required>
             </div>
                 <div class="col-sm-6 col-form-label">
-                    <label class ="text-light">Seleccione la configuracion</label>
+                    <label class ="text-light">Seleccione la configuración</label>
                     <select class="form-control form-control" name ="nombre_i" required>
                         {% for i in configurations %}
                         <option value="{{i['nombre']}}">{{i['nombre']}}</option>
