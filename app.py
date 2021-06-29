@@ -285,21 +285,47 @@ def notificaciones():
     return render_template('/logged/notificaciones.html')
 
 
-@app.route('/historial', methods = ['GET'])
+@app.route('/historial', methods = ['GET','POST'])
 def historial():
-    try:
-        username = session.get('username')
-        if username == None:
-            return render_template('login.html')
+    if request.method == 'GET':
+        try:
+            username = session.get('username')
+            if username == None:
+                return render_template('login.html')
 
-        incubaciones = list(db.Incubacion.find({
-            "id_incubadora" : session.get('id_incubadora')
-        }))
+            incubaciones = list(db.Incubacion.find({
+                "id_incubadora" : session.get('id_incubadora')
+            }))
 
-        return render_template('/logged/historial.html' , incubaciones = incubaciones)
+            return render_template('/logged/historial.html' , incubaciones = incubaciones)
 
 
-    except: return render_template('/logged/historial.html')
+        except: return render_template('/logged/historial.html')
+    else :
+        try:
+            # Eliminar documento incubacion
+            nombre = request.form['nombre_incubacion']
+
+            db.Incubacion.delete_one(
+                {
+                    "nombre": nombre,
+                    "id_incubadora": session.get("id_incubadora")
+                }
+            )
+            # eliminar de la lista
+            db.Incubadora.update_one(
+                {
+                    "id_incubadora" : session.get("id_incubadora")
+                }
+                ,
+                {
+                    "$pull" : { "incubaciones":nombre }
+                }
+            )
+            return redirect('/historial')
+        except:
+            return 'error'
+        
 
 
 

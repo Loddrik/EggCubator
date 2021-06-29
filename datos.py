@@ -5,6 +5,7 @@ from flask import Flask, render_template,request,url_for,redirect,session, Respo
 random.seed()
 
 def gen_temp(t_inf,t_sup):
+    a_list = int()
     return random.randint(int(t_inf) -1,int(t_sup))
 
 def gen_hum(hum_inf,hum_sup):

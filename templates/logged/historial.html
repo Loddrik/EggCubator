@@ -13,7 +13,11 @@
           Rotaciones por dia: {{i['adv_config']['rotaciones']}}<br>
           Dias de incubacion: {{i['adv_config']['dias']}}<br>
           {% if count|count != incubaciones|count - 1 %}
-          <a class="btn btn-danger btn-sm" method="get" type="submit">trash</a>
+          <form method="post" action="{{url_for('historial')}}">
+            <input type="hidden" value="{{i['nombre']}}" name="nombre_incubacion">
+            <button class="btn btn-danger btn-sm" type="submit" value="submit">Eliminar</button>
+          </form>
+          <!-- <a class="btn btn-danger btn-sm" method="post" href="/historial" n type="submit">Eliminar</a> -->
           {% endif %}  
       </div>
   </div>
