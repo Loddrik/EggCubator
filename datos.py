@@ -9,11 +9,18 @@ def gen_temp(t_inf,t_sup):
     return random.randint(int(t_inf) -1,int(t_sup))
 
 def gen_hum(hum_inf,hum_sup):
+    if int(hum_sup) > 100:
+        return random.randint(int(hum_inf) - 3,int(hum_sup) )    
     return random.randint(int(hum_inf) - 3,int(hum_sup)+ 3 )
 
 def gen_puerta():
     a_list= [0,1]
     distribucion = [.95, .05]
     return random.choices(a_list,distribucion)
+
+def gen_movimiento():
+    a_list = [0,1]
+    dist = [ .99, .01]
+    return random.choices(a_list,dist)
 
 
