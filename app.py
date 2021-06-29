@@ -240,6 +240,7 @@ def generate_humedad(min,max):
                 "time": datetime.now().strftime("%H:%M:%S"),
                 "min" : min,
                 "max" : max,
+                "puerta": gen_puerta(),
                 "value": gen_hum(min,max)
             }
         )

@@ -29,7 +29,7 @@
                     <table id="tabla1" class="table table-dark table-sm"> 
                         <thead id="fila">
                             <tr class="table-active" style="font-size:15px">
-                                <th scope="col">Fecha y hora</th>
+                                <th scope="col">Hora</th>
                                 <th scope="col">Detalle</th>
                             </tr>
                             
@@ -57,6 +57,19 @@
                 <canvas id="canvas2"></canvas>
             </div>
         </div>
+        </div>
+    </div>
+</div>
+<div class="container px-4 py-5">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="card text-white bg-dark">
+                <h5 class="card-header">Estado sensor de movimiento</h5>
+                <div class="card-body">
+                    <button id="activo" type="button" class="btn btn-success">Activo</button>
+                    <button style="display: none;" id="inactivo" type="button" class="btn btn-danger">En pausa</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -146,10 +159,18 @@
                 config.data.datasets[0].data.shift();
             }
             if(data.value > data.max){
-                addRow('tabla1',data.time,'Humedad sobre los limites.');
+                addRow('tabla1',data.time,'Humedad sobre los limites. (' + data.value + '%)','humedad');
             }
             else if(data.value < data.min){
-                addRow("tabla1",data.time,"Humedad bajo los limites.");
+                addRow("tabla1",data.time,'Humedad bajo los limites. (' + data.value + '%)','humedad');
+            }
+            if(data.puerta == '1'){
+                addRow("tabla1", data.time,'La puerta ha sido abierta','puerta');
+                change_statement('activo','inactivo','1');
+
+            }
+            else{
+                change_statement('activo','inactivo','0');
             }
             config.data.labels.push(data.time);
             config.data.datasets[0].data.push(data.value);
@@ -157,14 +178,42 @@
         }
     });
 
-    function addRow(tableID, text,text2){
+    function change_statement(id1, id2, valor){
+        let ref = document.getElementById(id1);
+        let ref2 = document.getElementById(id2);
+        
+        if(valor == 1){
+            ref.style.display = "none";
+            ref2.style.display = "inline";
+        }
+        else{
+            ref2.style.display = "none";
+            ref.style.display = "inline";
+            
+        }
+    }
+
+    function addRow(tableID, text,text2,ident){
         let tableRef = document.getElementById(tableID);
 
         let newRow = tableRef.insertRow(1);
-
+        
         let newCell1 = newRow.insertCell(0); 
         let newCell2 = newRow.insertCell(1); 
 
+        if(ident == 'humedad'){
+            // newCell1.classList.add('bg-danger');
+            newCell1.style.backgroundColor = 'rgb(255, 99, 132)';
+            newCell2.style.backgroundColor = 'rgb(255, 99, 132)';
+        }
+        else if(ident == 'temperatura'){
+            newCell1.style.backgroundColor = 'rgb(0, 203, 203)';
+            newCell2.style.backgroundColor = 'rgb(0, 203, 203)';
+        }
+        else{
+            newCell1.classList.add('bg-warning');
+            newCell2.classList.add('bg-warning');
+        }
         
         newCell1.innerHTML = text
         newCell2.innerHTML = text2
@@ -251,10 +300,10 @@
                 config.data.datasets[0].data.shift();
             }
             if(data.value > data.max){
-                addRow('tabla1',data.time,'Temperatura sobre los limites.');
+                addRow('tabla1',data.time,'Temperatura sobre los limites. (' + data.value + '°C)', 'temperatura');
             }
             else if(data.value < data.min){
-                addRow("tabla1",data.time,"Temperatura bajo los limites.");
+                addRow("tabla1",data.time,'Temperatura bajo los limites.(' + data.value + '°C)','temperatura');
             }
             config.data.labels.push(data.time);
             config.data.datasets[0].data.push(data.value);
