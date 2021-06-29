@@ -12,6 +12,9 @@ html {
 .display-4 {
 	color: aliceblue;
 }
+.mt-5{
+	color:goldenrod;
+}
 body {
 	background-color: #333;
 }

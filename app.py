@@ -302,6 +302,9 @@ def historial():
     except: return render_template('/logged/historial.html')
 
 
+@app.route('/about')
+def about():
+    return render_template('about.html')
 
 
 
