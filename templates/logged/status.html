@@ -172,6 +172,9 @@
             else{
                 change_statement('activo','inactivo','0');
             }
+            if(data.movimiento == '1'){
+                addRow("tabla1", data.time,'Se ha detectado movimiento en los huevos','huevos')
+            }
             config.data.labels.push(data.time);
             config.data.datasets[0].data.push(data.value);
             lineChart.update();
@@ -209,6 +212,10 @@
         else if(ident == 'temperatura'){
             newCell1.style.backgroundColor = 'rgb(0, 203, 203)';
             newCell2.style.backgroundColor = 'rgb(0, 203, 203)';
+        }
+        else if(ident == 'huevos'){
+            newCell1.style.backgroundColor = 'rgb(102, 204, 0)';
+            newCell2.style.backgroundColor = 'rgb(102, 204, 0)';
         }
         else{
             newCell1.classList.add('bg-warning');
